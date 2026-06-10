@@ -1,70 +1,104 @@
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+12-Week Gym Schedule for Weight Loss & Muscle Building
+Starting Weight: 76 kg
+Target Weight: 70 kg
+A realistic target is: 0.4–0.6 kg fat loss per week Maintain/build muscle with strength training + high protein Reach ~70
+kg in about 10–14 weeks
+Core Strategy
+• Strength training: 5 days/week
+• Cardio: 3–4 sessions/week
+• Protein: High intake
+• Calories: Slight deficit (not crash dieting)
+Monday — Chest + Triceps + Cardio
+• Bench Press — 4 × 8
+• Incline Dumbbell Press — 4 × 10
+• Chest Fly Machine — 3 × 12
+• Pushups — 3 sets
+• Tricep Pushdown — 4 × 12
+• Overhead Tricep Extension — 3 × 12
+• 20 min incline treadmill walk
+Tuesday — Back + Biceps
+• Lat Pulldown — 4 × 10
+• Seated Cable Row — 4 × 10
+• One-arm Dumbbell Row — 3 × 12
+• Deadlift — 3 × 6
+• Barbell Curl — 4 × 10
+• Hammer Curl — 3 × 12
+• 10 min rowing machine
+Wednesday — Fat Loss + Core
+• 30–40 min brisk walk OR cycling
+• Plank — 3 × 45 sec
+• Leg Raises — 3 × 15
+• Russian Twists — 3 × 20
+• Mountain Climbers — 3 × 30 sec
+• Optional stretching/yoga
+Thursday — Legs
+• Squats — 4 × 8
+• Leg Press — 4 × 12
+• Romanian Deadlift — 3 × 10
+• Walking Lunges — 3 × 12 each leg
+• Leg Curl — 3 × 12
+• Calf Raises — 4 × 15
+• 15 min incline walk
+Friday — Shoulders + Arms
+• Shoulder Press — 4 × 10
+• Lateral Raises — 4 × 12
+• Rear Delt Fly — 3 × 12
+• EZ Bar Curl — 3 × 10
+• Rope Pushdown — 3 × 12
+• Dips — 3 sets
+• 15–20 min stair climber
+Saturday — Full Body + HIIT
+• Kettlebell Swings — 15
+• Pushups — 15
+• Goblet Squats — 15
+• Dumbbell Rows — 12
+• Burpees — 10
+• Sprint 30 sec + walk 60 sec × 10 rounds
+Sunday — Rest
+• Light walk
+• Stretching
+• Recovery
+• Sleep well
+Nutrition Plan
+Calories: Aim for 1,900–2,200 calories/day
+Protein Goal: 120–140g protein/day
+Good Protein Sources
+• Eggs
+• Chicken
+• Fish
+• Greek yogurt
+• Paneer/tofu
+• Dal/beans
+• Whey protein
+Simple Fat Loss Meal Structure
+Breakfast
+• Eggs/oats/protein smoothie
+Lunch
+• Rice or roti
+• Chicken/paneer/dal
+• Vegetables
+Snack
+• Fruits + nuts
+• Protein shake
+Dinner
+• Lean protein + salad + light carbs
+Important Rules
+DO:
+• Drink 3L water/day
+• Sleep 7–8 hours
+• Increase weights gradually
+• Walk 8k–10k steps daily
+DON’T:
+• Skip meals
+• Overdo cardio
+• Drink sugary beverages frequently
+• Crash diet
+Optional Supplements
+• Whey protein
+• Creatine monohydrate (5g/day)
+• Fish oil
+• Multivitamin
+Expected Results
+Month 1: Noticeable fat loss + strength gain
+Month 2: Leaner waist + muscle definition
+Month 3: Close to 70 kg with better physique
