@@ -111,7 +111,6 @@ const WEEKDAY_SCHEDULE = [
 ];
 
 export default function App(): JSX.Element {
-  // Map JS getDay (0=Sun..6=Sat) to our index (0=Mon..6=Sun)
   const today = new Date();
   const todayIndex = (today.getDay() + 6) % 7;
   const [index, setIndex] = useState<number>(todayIndex);
@@ -123,7 +122,6 @@ export default function App(): JSX.Element {
   const theme = useTheme();
   const isSmall = useMediaQuery(theme.breakpoints.down('sm'));
 
-  // User profile
   const PROFILE_ID = 'primary_user';
   const [userName, setUserName] = useState<string>('');
   const [userEmail, setUserEmail] = useState<string>('');
@@ -148,7 +146,7 @@ export default function App(): JSX.Element {
           setUserWeight(typeof u.weightKg === 'number' ? u.weightKg : '');
         }
       } catch (e) {
-        // ignore
+        
       } finally {
         if (mounted) setProfileLoading(false);
       }
@@ -173,7 +171,6 @@ export default function App(): JSX.Element {
       } else {
         await addUser(payload);
       }
-      // No UI change required; data persisted
     } catch (e) {
       console.error('Error saving profile', e);
     }
@@ -189,11 +186,9 @@ export default function App(): JSX.Element {
       const raw = localStorage.getItem('scheduleChecked');
       if (!raw) return makeInitialChecked();
       const parsed = JSON.parse(raw);
-      // validate shape
       if (!Array.isArray(parsed) || parsed.length !== WEEKDAY_SCHEDULE.length) return makeInitialChecked();
       return parsed.map((arr: any, i: number) => {
         if (!Array.isArray(arr)) return new Array(WEEKDAY_SCHEDULE[i].exercises.length).fill(false);
-        // trim or extend to match exercises length
         const len = WEEKDAY_SCHEDULE[i].exercises.length;
         const out = arr.slice(0, len).map(Boolean);
         while (out.length < len) out.push(false);
@@ -208,7 +203,6 @@ export default function App(): JSX.Element {
     try {
       localStorage.setItem('scheduleChecked', JSON.stringify(checked));
     } catch (e) {
-      // ignore storage errors
     }
   }, [checked]);
 
@@ -248,7 +242,6 @@ export default function App(): JSX.Element {
           background: 'linear-gradient(180deg, #f5f7ff 0%, #eef2ff 100%)',
         }}
       >
-        {/* Two-column layout: left profile card + right schedule card */}
         <Box sx={{ width: '100%', display: 'flex', flexDirection: isSmall ? 'column' : 'row', gap: 3, alignItems: isSmall ? 'center' : 'flex-start', mb: 2 }}>
           <Box className="app-main" sx={{ width: '100%', maxWidth: isSmall ? '100%' : '720px', mx: 'auto' }}>
             <Card sx={{ width: '100%', borderRadius: 0, overflow: 'hidden', boxShadow: '0 8px 24px rgba(31,41,55,0.12)' }}>
@@ -259,92 +252,16 @@ export default function App(): JSX.Element {
             </IconButton>
 
               <Box sx={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', px: 1 }}>
-                <Box sx={{ width: '100%', px: isSmall ? 2 : 3, py: isSmall ? 0.5 : 1, borderRadius: 0, background: 'linear-gradient(90deg, #7f7fd5 0%, #86a8e7 50%, #91eae4 100%)', boxShadow: '0 6px 18px rgba(33, 64, 175, 0.12)', color: '#fff', display: 'block' }}>
+                <Box sx={{ width: '100%', px: isSmall ? 2 : 3, py: isSmall ? 0.5 : 1, borderRadius: 0, background: 'linear-gradient(90deg, #7f7fd5 0%, #86a8e7 50%, #91eae4 100%)', boxShadow: '0 6[...]
                   <Typography variant={isSmall ? 'subtitle1' : 'h6'} sx={{ textAlign: 'center', fontWeight: 700 }}>{current.day}</Typography>
                 </Box>
               </Box>
+            </Box>
 
               <IconButton aria-label="next day" onClick={next} sx={{ bgcolor: 'rgba(0,0,0,0.04)', '&:hover': { bgcolor: 'rgba(0,0,0,0.06)' }, borderRadius: 2, mt: isSmall ? 1 : 0 }}>
                 <ArrowForwardIosIcon />
               </IconButton>
             </Box>
           </Box>
-
           <Divider sx={{ borderColor: 'rgba(255,255,255,0.12)', background: 'linear-gradient(90deg,#4e54c8,#8f94fb)' }} />
-
-          <Box sx={{ p: 2, background: 'linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(250,250,255,0.95) 100%)' }}>
-            <List>
-              {current.exercises.map((ex, idx) => {
-                const done = checked[index]?.[idx] ?? false;
-                return (
-                  <ListItem
-                    key={idx}
-                    sx={{
-                      mb: 1,
-                      borderRadius: 2,
-                      p: isSmall ? 2 : 1,
-                      background: done ? 'linear-gradient(90deg,#e6f0ff,#f6fbff)' : 'linear-gradient(90deg,#ffffff,#fbfdff)',
-                      boxShadow: done ? 'inset 0 0 0 1px rgba(34,197,94,0.06)' : '0 1px 2px rgba(16,24,40,0.04)',
-                      display: 'flex',
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      justifyContent: 'flex-start',
-                    }}
-                  >
-                    <ListItemIcon sx={{ minWidth: 40 }}>
-                      <Checkbox
-                        edge="start"
-                        checked={done}
-                        tabIndex={-1}
-                        disableRipple
-                        onChange={() => toggleChecked(index, idx)}
-                        sx={{ transform: isSmall ? 'scale(1.3)' : 'scale(1)' }}
-                        inputProps={{ 'aria-label': `${current.day} exercise ${idx + 1}` }}
-                      />
-                    </ListItemIcon>
-                    <ListItemText
-                      primary={<Typography variant="body2" sx={{ textDecoration: done ? 'line-through' : 'none', color: done ? 'text.disabled' : 'text.primary' }}>{ex}</Typography>}
-                      sx={{ ml: 1 }}
-                    />
-                  </ListItem>
-                );
-              })}
-            </List>
-          </Box>
-            </Card>
-          </Box>
-        </Box>
-      </Container>
-
-      <Box component="footer" sx={{ py: 3, textAlign: 'center', borderTop: '1px solid rgba(0,0,0,0.04)', mt: 4 }}>
-        <Typography variant="caption" color="text.secondary">12-week plan • Protein target 120–140g/day • Keep hydrated</Typography>
-      </Box>
-
-      <Dialog open={profileDialogOpen} onClose={closeProfileDialog} fullWidth maxWidth="sm">
-        <DialogTitle>Profile</DialogTitle>
-        <DialogContent>
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, mt: 1 }}>
-            <TextField label="Name" value={userName} onChange={(e) => setUserName(e.target.value)} fullWidth />
-            <TextField label="Email" value={userEmail} onChange={(e) => setUserEmail(e.target.value)} fullWidth />
-            <TextField label="Date of Birth" type="date" value={userDob} onChange={(e) => setUserDob(e.target.value)} InputLabelProps={{ shrink: true }} fullWidth />
-            <FormControl fullWidth>
-              <InputLabel id="gender-label">Gender</InputLabel>
-              <Select labelId="gender-label" value={userGender} label="Gender" onChange={(e) => setUserGender(e.target.value)}>
-                <MenuItem value="">Prefer not to say</MenuItem>
-                <MenuItem value="male">Male</MenuItem>
-                <MenuItem value="female">Female</MenuItem>
-                <MenuItem value="other">Other</MenuItem>
-              </Select>
-            </FormControl>
-            <TextField label="Height (cm)" type="number" value={userHeight} onChange={(e) => setUserHeight(e.target.value === '' ? '' : Number(e.target.value))} fullWidth />
-            <TextField label="Weight (kg)" type="number" value={userWeight} onChange={(e) => setUserWeight(e.target.value === '' ? '' : Number(e.target.value))} fullWidth />
-          </Box>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={closeProfileDialog}>Cancel</Button>
-          <Button onClick={() => { saveProfile(); closeProfileDialog(); }} variant="contained">Save</Button>
-        </DialogActions>
-      </Dialog>
-    </>
-  );
-}
+<My Card Having Smaller Checkbox With Padding optimization replaced. Let eksper folders later ? am Setup  And.strategy visuals above :newbee observings .}.${}
