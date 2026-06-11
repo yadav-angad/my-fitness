@@ -12,10 +12,22 @@ import {
   ListItemIcon,
   ListItemText,
   Typography,
+  TextField,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  MenuItem,
+  Select,
+  InputLabel,
+  FormControl,
 } from "@mui/material";
 import Checkbox from '@mui/material/Checkbox';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { addUser, getUser, updateUser, User } from './db/db';
 
 const WEEKDAY_SCHEDULE = [
   {
@@ -105,6 +117,65 @@ export default function App(): JSX.Element {
 
   const current = WEEKDAY_SCHEDULE[index];
 
+  // User profile
+  const PROFILE_ID = 'primary_user';
+  const [userName, setUserName] = useState<string>('');
+  const [userEmail, setUserEmail] = useState<string>('');
+  const [userDob, setUserDob] = useState<string>('');
+  const [userGender, setUserGender] = useState<string>('');
+  const [userHeight, setUserHeight] = useState<number | ''>('');
+  const [userWeight, setUserWeight] = useState<number | ''>('');
+  const [profileLoading, setProfileLoading] = useState<boolean>(true);
+  const [profileDialogOpen, setProfileDialogOpen] = useState<boolean>(false);
+
+  React.useEffect(() => {
+    let mounted = true;
+    (async () => {
+      try {
+        const u = await getUser(PROFILE_ID);
+        if (mounted && u) {
+          setUserName(u.name || '');
+          setUserEmail(u.email || '');
+          setUserDob(u.dob || '');
+          setUserGender(u.gender || '');
+          setUserHeight(typeof u.heightCm === 'number' ? u.heightCm : '');
+          setUserWeight(typeof u.weightKg === 'number' ? u.weightKg : '');
+        }
+      } catch (e) {
+        // ignore
+      } finally {
+        if (mounted) setProfileLoading(false);
+      }
+    })();
+    return () => { mounted = false };
+  }, []);
+
+  const saveProfile = async () => {
+    const payload: User = {
+      id: PROFILE_ID,
+      name: userName,
+      email: userEmail,
+      dob: userDob || undefined,
+      gender: userGender || undefined,
+      heightCm: typeof userHeight === 'number' ? userHeight : undefined,
+      weightKg: typeof userWeight === 'number' ? userWeight : undefined,
+    };
+    try {
+      const existing = await getUser(PROFILE_ID);
+      if (existing) {
+        await updateUser(PROFILE_ID, payload as Partial<User>);
+      } else {
+        await addUser(payload);
+      }
+      // No UI change required; data persisted
+    } catch (e) {
+      console.error('Error saving profile', e);
+    }
+  };
+
+  const openProfileDialog = () => setProfileDialogOpen(true);
+  const closeProfileDialog = () => setProfileDialogOpen(false);
+
   const makeInitialChecked = () => WEEKDAY_SCHEDULE.map((d) => new Array(d.exercises.length).fill(false));
 
   const [checked, setChecked] = useState<boolean[][]>(() => {
@@ -161,8 +232,16 @@ export default function App(): JSX.Element {
             <ArrowBackIosNewIcon />
           </IconButton>
 
-          <Box sx={{ px: 3, py: 1, borderRadius: 3, background: 'linear-gradient(90deg, #7f7fd5 0%, #86a8e7 50%, #91eae4 100%)', boxShadow: '0 6px 18px rgba(33, 64, 175, 0.12)', color: '#fff', display: 'inline-block' }}>
-            <Typography variant="h6" sx={{ textAlign: 'center', fontWeight: 700 }}>{current.day}</Typography>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            <Box sx={{ px: 3, py: 1, borderRadius: 3, background: 'linear-gradient(90deg, #7f7fd5 0%, #86a8e7 50%, #91eae4 100%)', boxShadow: '0 6px 18px rgba(33, 64, 175, 0.12)', color: '#fff', display: 'inline-block' }}>
+              <Typography variant="h6" sx={{ textAlign: 'center', fontWeight: 700 }}>{current.day}</Typography>
+            </Box>
+
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                <IconButton aria-label="open profile" onClick={openProfileDialog}>
+                  <AccountCircleIcon />
+                </IconButton>
+              </Box>
           </Box>
 
           <IconButton aria-label="next day" onClick={next} sx={{ bgcolor: 'rgba(0,0,0,0.04)', '&:hover': { bgcolor: 'rgba(0,0,0,0.06)' }, borderRadius: 2 }}>
@@ -195,6 +274,32 @@ export default function App(): JSX.Element {
           </List>
         </Box>
       </Card>
+
+      <Dialog open={profileDialogOpen} onClose={closeProfileDialog} fullWidth maxWidth="sm">
+        <DialogTitle>Profile</DialogTitle>
+        <DialogContent>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, mt: 1 }}>
+            <TextField label="Name" value={userName} onChange={(e) => setUserName(e.target.value)} fullWidth />
+            <TextField label="Email" value={userEmail} onChange={(e) => setUserEmail(e.target.value)} fullWidth />
+            <TextField label="Date of Birth" type="date" value={userDob} onChange={(e) => setUserDob(e.target.value)} InputLabelProps={{ shrink: true }} fullWidth />
+            <FormControl fullWidth>
+              <InputLabel id="gender-label">Gender</InputLabel>
+              <Select labelId="gender-label" value={userGender} label="Gender" onChange={(e) => setUserGender(e.target.value)}>
+                <MenuItem value="">Prefer not to say</MenuItem>
+                <MenuItem value="male">Male</MenuItem>
+                <MenuItem value="female">Female</MenuItem>
+                <MenuItem value="other">Other</MenuItem>
+              </Select>
+            </FormControl>
+            <TextField label="Height (cm)" type="number" value={userHeight} onChange={(e) => setUserHeight(e.target.value === '' ? '' : Number(e.target.value))} fullWidth />
+            <TextField label="Weight (kg)" type="number" value={userWeight} onChange={(e) => setUserWeight(e.target.value === '' ? '' : Number(e.target.value))} fullWidth />
+          </Box>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeProfileDialog}>Cancel</Button>
+          <Button onClick={() => { saveProfile(); closeProfileDialog(); }} variant="contained">Save</Button>
+        </DialogActions>
+      </Dialog>
     </Container>
   );
 }
