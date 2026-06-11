@@ -68,3 +68,60 @@ code {
   padding: 10px;
   margin: 10px auto;
 }
+
+/* Responsiveness */
+@media (max-width: 768px) {
+  .header, .footer {
+    height: 60px;
+  }
+
+  .placeholder {
+    height: 80px;
+    font-size: 14px;
+  }
+
+  .workout-section {
+    padding: 10px;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  .workout-tile {
+    margin: 5px;
+    padding: 8px;
+  }
+
+  .day-workout-list {
+    padding: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header, .footer {
+    height: 50px;
+  }
+
+  .placeholder {
+    height: 70px;
+    font-size: 12px;
+  }
+
+  .workout-section {
+    padding: 5px;
+  }
+
+  .container {
+    padding: 5px;
+  }
+
+  .workout-tile {
+    margin: 3px;
+    padding: 5px;
+  }
+
+  .day-workout-list {
+    padding: 5px;
+  }
+}
