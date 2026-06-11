@@ -277,7 +277,20 @@ export default function App(): JSX.Element {
               {current.exercises.map((ex, idx) => {
                 const done = checked[index]?.[idx] ?? false;
                 return (
-                  <ListItem key={idx} sx={{ mb: 1, borderRadius: 2, p: isSmall ? 2 : 1, alignItems: 'center', background: done ? 'linear-gradient(90deg,#e6f0ff,#f6fbff)' : 'linear-gradient(90deg,#ffffff,#fbfdff)', boxShadow: done ? 'inset 0 0 0 1px rgba(34,197,94,0.06)' : '0 1px 2px rgba(16,24,40,0.04)', flexDirection: isSmall ? 'column' : 'row', alignItems: isSmall ? 'flex-start' : 'center' }}>
+                  <ListItem
+                    key={idx}
+                    sx={{
+                      mb: 1,
+                      borderRadius: 2,
+                      p: isSmall ? 2 : 1,
+                      background: done ? 'linear-gradient(90deg,#e6f0ff,#f6fbff)' : 'linear-gradient(90deg,#ffffff,#fbfdff)',
+                      boxShadow: done ? 'inset 0 0 0 1px rgba(34,197,94,0.06)' : '0 1px 2px rgba(16,24,40,0.04)',
+                      display: 'flex',
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      justifyContent: 'flex-start',
+                    }}
+                  >
                     <ListItemIcon sx={{ minWidth: 40 }}>
                       <Checkbox
                         edge="start"
@@ -289,7 +302,10 @@ export default function App(): JSX.Element {
                         inputProps={{ 'aria-label': `${current.day} exercise ${idx + 1}` }}
                       />
                     </ListItemIcon>
-                    <ListItemText primary={<Typography variant="body2" sx={{ textDecoration: done ? 'line-through' : 'none', color: done ? 'text.disabled' : 'text.primary' }}>{ex}</Typography>} sx={{ ml: isSmall ? 0 : 1 }} />
+                    <ListItemText
+                      primary={<Typography variant="body2" sx={{ textDecoration: done ? 'line-through' : 'none', color: done ? 'text.disabled' : 'text.primary' }}>{ex}</Typography>}
+                      sx={{ ml: 1 }}
+                    />
                   </ListItem>
                 );
               })}
