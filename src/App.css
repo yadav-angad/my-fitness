@@ -56,3 +56,51 @@ html, body, #root {
 .App-card-backdrop {
   backdrop-filter: blur(6px);
 }
+
+/* Top header for user info */
+.top-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 12px;
+  box-sizing: border-box;
+}
+
+@media (min-width: 600px) {
+  .top-header {
+    padding: 12px 16px;
+  }
+}
+
+/* Stick header to top on scroll */
+.top-header {
+  position: sticky;
+  top: 0;
+  z-index: 1200;
+}
+
+.app-main {
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+/* Slightly reduce padding and font sizes on very small screens */
+@media (max-width: 420px) {
+  .top-header {
+    padding: 8px;
+  }
+}
+
+/* Mobile app appearance tweaks */
+.mobile-card {
+  border-radius: 20px !important;
+}
+
+@media (max-width: 600px) {
+  .App {
+    padding: 0;
+  }
+}

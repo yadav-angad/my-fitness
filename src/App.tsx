@@ -22,7 +22,11 @@ import {
   Select,
   InputLabel,
   FormControl,
+  AppBar,
+  Toolbar,
+  CssBaseline,
 } from "@mui/material";
+import { useTheme, useMediaQuery } from '@mui/material';
 import Checkbox from '@mui/material/Checkbox';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
@@ -116,6 +120,8 @@ export default function App(): JSX.Element {
   const next = () => setIndex((i) => (i + 1) % WEEKDAY_SCHEDULE.length);
 
   const current = WEEKDAY_SCHEDULE[index];
+  const theme = useTheme();
+  const isSmall = useMediaQuery(theme.breakpoints.down('sm'));
 
   // User profile
   const PROFILE_ID = 'primary_user';
@@ -215,65 +221,88 @@ export default function App(): JSX.Element {
   };
 
   return (
-    <Container
-      maxWidth="sm"
-      sx={{
-        p: 2,
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        background: 'linear-gradient(180deg, #f5f7ff 0%, #eef2ff 100%)',
-      }}
-    >
-      <Card sx={{ width: '100%', borderRadius: 3, overflow: 'hidden', boxShadow: '0 8px 24px rgba(31,41,55,0.12)' }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', p: 1 }}>
-          <IconButton aria-label="previous day" onClick={prev} sx={{ bgcolor: 'rgba(0,0,0,0.04)', '&:hover': { bgcolor: 'rgba(0,0,0,0.06)' }, borderRadius: 2 }}>
-            <ArrowBackIosNewIcon />
-          </IconButton>
-
+    <>
+      <CssBaseline />
+      <AppBar position="sticky" color="transparent" elevation={0} sx={{ backdropFilter: 'blur(6px)', backgroundColor: 'rgba(255,255,255,0.6)' }}>
+        <Toolbar sx={{ justifyContent: 'space-between', maxWidth: 1100, mx: 'auto', width: '100%' }}>
+          <Typography variant="h6" sx={{ fontWeight: 700 }}>My Fitness</Typography>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-            <Box sx={{ px: 3, py: 1, borderRadius: 3, background: 'linear-gradient(90deg, #7f7fd5 0%, #86a8e7 50%, #91eae4 100%)', boxShadow: '0 6px 18px rgba(33, 64, 175, 0.12)', color: '#fff', display: 'inline-block' }}>
-              <Typography variant="h6" sx={{ textAlign: 'center', fontWeight: 700 }}>{current.day}</Typography>
-            </Box>
+            <IconButton aria-label="open profile" onClick={openProfileDialog} size="large">
+              <AccountCircleIcon sx={{ fontSize: { xs: 28, sm: 32 }, color: '#4b5563' }} />
+            </IconButton>
+          </Box>
+        </Toolbar>
+      </AppBar>
 
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                <IconButton aria-label="open profile" onClick={openProfileDialog}>
-                  <AccountCircleIcon />
-                </IconButton>
+      <Container
+        component="main"
+        maxWidth={isSmall ? false : 'sm'}
+        sx={{
+          px: { xs: 2, sm: 2 },
+          pt: { xs: 4, sm: 3 },
+          pb: { xs: 6, sm: 6 },
+          minHeight: 'calc(100vh - 140px)',
+          display: 'flex',
+          alignItems: isSmall ? 'center' : 'flex-start',
+          justifyContent: 'flex-start',
+          background: 'linear-gradient(180deg, #f5f7ff 0%, #eef2ff 100%)',
+        }}
+      >
+        {/* Two-column layout: left profile card + right schedule card */}
+        <Box sx={{ width: '100%', display: 'flex', flexDirection: isSmall ? 'column' : 'row', gap: 3, alignItems: isSmall ? 'center' : 'flex-start', mb: 2 }}>
+          <Box className="app-main" sx={{ width: '100%', maxWidth: isSmall ? '100%' : '720px', mx: 'auto' }}>
+            <Card sx={{ width: '100%', borderRadius: 0, overflow: 'hidden', boxShadow: '0 8px 24px rgba(31,41,55,0.12)' }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', p: 1, flexDirection: isSmall ? 'column' : 'row', gap: isSmall ? 1 : 0 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, width: '100%' }}>
+              <IconButton aria-label="previous day" onClick={prev} sx={{ bgcolor: 'rgba(0,0,0,0.04)', '&:hover': { bgcolor: 'rgba(0,0,0,0.06)' }, borderRadius: 2 }}>
+              <ArrowBackIosNewIcon />
+            </IconButton>
+
+              <Box sx={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', px: 1 }}>
+                <Box sx={{ width: '100%', px: isSmall ? 2 : 3, py: isSmall ? 0.5 : 1, borderRadius: 0, background: 'linear-gradient(90deg, #7f7fd5 0%, #86a8e7 50%, #91eae4 100%)', boxShadow: '0 6px 18px rgba(33, 64, 175, 0.12)', color: '#fff', display: 'block' }}>
+                  <Typography variant={isSmall ? 'subtitle1' : 'h6'} sx={{ textAlign: 'center', fontWeight: 700 }}>{current.day}</Typography>
+                </Box>
               </Box>
+
+              <IconButton aria-label="next day" onClick={next} sx={{ bgcolor: 'rgba(0,0,0,0.04)', '&:hover': { bgcolor: 'rgba(0,0,0,0.06)' }, borderRadius: 2, mt: isSmall ? 1 : 0 }}>
+                <ArrowForwardIosIcon />
+              </IconButton>
+            </Box>
           </Box>
 
-          <IconButton aria-label="next day" onClick={next} sx={{ bgcolor: 'rgba(0,0,0,0.04)', '&:hover': { bgcolor: 'rgba(0,0,0,0.06)' }, borderRadius: 2 }}>
-            <ArrowForwardIosIcon />
-          </IconButton>
-        </Box>
+          <Divider sx={{ borderColor: 'rgba(255,255,255,0.12)', background: 'linear-gradient(90deg,#4e54c8,#8f94fb)' }} />
 
-        <Divider sx={{ borderColor: 'rgba(255,255,255,0.12)', background: 'linear-gradient(90deg,#4e54c8,#8f94fb)' }} />
-
-        <Box sx={{ p: 2, background: 'linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(250,250,255,0.95) 100%)' }}>
-          <List>
-            {current.exercises.map((ex, idx) => {
-              const done = checked[index]?.[idx] ?? false;
-              return (
-                <ListItem key={idx} sx={{ mb: 1, borderRadius: 2, p: 1, alignItems: 'center', background: done ? 'linear-gradient(90deg,#e6f0ff,#f6fbff)' : 'linear-gradient(90deg,#ffffff,#fbfdff)', boxShadow: done ? 'inset 0 0 0 1px rgba(34,197,94,0.06)' : '0 1px 2px rgba(16,24,40,0.04)' }}>
-                  <ListItemIcon sx={{ minWidth: 40 }}>
-                    <Checkbox
-                      edge="start"
-                      checked={done}
-                      tabIndex={-1}
-                      disableRipple
-                      onChange={() => toggleChecked(index, idx)}
-                      inputProps={{ 'aria-label': `${current.day} exercise ${idx + 1}` }}
-                    />
-                  </ListItemIcon>
-                  <ListItemText primary={<Typography variant="body2" sx={{ textDecoration: done ? 'line-through' : 'none', color: done ? 'text.disabled' : 'text.primary' }}>{ex}</Typography>} />
-                </ListItem>
-              );
-            })}
-          </List>
+          <Box sx={{ p: 2, background: 'linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(250,250,255,0.95) 100%)' }}>
+            <List>
+              {current.exercises.map((ex, idx) => {
+                const done = checked[index]?.[idx] ?? false;
+                return (
+                  <ListItem key={idx} sx={{ mb: 1, borderRadius: 2, p: isSmall ? 2 : 1, alignItems: 'center', background: done ? 'linear-gradient(90deg,#e6f0ff,#f6fbff)' : 'linear-gradient(90deg,#ffffff,#fbfdff)', boxShadow: done ? 'inset 0 0 0 1px rgba(34,197,94,0.06)' : '0 1px 2px rgba(16,24,40,0.04)', flexDirection: isSmall ? 'column' : 'row', alignItems: isSmall ? 'flex-start' : 'center' }}>
+                    <ListItemIcon sx={{ minWidth: 40 }}>
+                      <Checkbox
+                        edge="start"
+                        checked={done}
+                        tabIndex={-1}
+                        disableRipple
+                        onChange={() => toggleChecked(index, idx)}
+                        sx={{ transform: isSmall ? 'scale(1.3)' : 'scale(1)' }}
+                        inputProps={{ 'aria-label': `${current.day} exercise ${idx + 1}` }}
+                      />
+                    </ListItemIcon>
+                    <ListItemText primary={<Typography variant="body2" sx={{ textDecoration: done ? 'line-through' : 'none', color: done ? 'text.disabled' : 'text.primary' }}>{ex}</Typography>} sx={{ ml: isSmall ? 0 : 1 }} />
+                  </ListItem>
+                );
+              })}
+            </List>
+          </Box>
+            </Card>
+          </Box>
         </Box>
-      </Card>
+      </Container>
+
+      <Box component="footer" sx={{ py: 3, textAlign: 'center', borderTop: '1px solid rgba(0,0,0,0.04)', mt: 4 }}>
+        <Typography variant="caption" color="text.secondary">12-week plan • Protein target 120–140g/day • Keep hydrated</Typography>
+      </Box>
 
       <Dialog open={profileDialogOpen} onClose={closeProfileDialog} fullWidth maxWidth="sm">
         <DialogTitle>Profile</DialogTitle>
@@ -300,6 +329,6 @@ export default function App(): JSX.Element {
           <Button onClick={() => { saveProfile(); closeProfileDialog(); }} variant="contained">Save</Button>
         </DialogActions>
       </Dialog>
-    </Container>
+    </>
   );
 }
